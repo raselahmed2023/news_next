@@ -1,6 +1,6 @@
-import BreakingNews from '@/components/BreakingNews';
-import Header from '@/components/Header';
-import Navbar from '@/components/Navbar';
+import BreakingNews from '@/components/shared/BreakingNews';
+import Header from '@/components/shared/Header';
+import Navbar from '@/components/shared/Navbar';
 import React from 'react';
 
 const layout = ({children}) => {
