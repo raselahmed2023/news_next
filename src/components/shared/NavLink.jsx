@@ -11,9 +11,7 @@ const NavLink = ({ href, children, className = "" }) => {
     return (
         <Link
             href={href}
-            // Notice the space added before ${className}
-            className={`${isActive ? "border-b-2 border-b-purple-500" : ""} ${className}`}
-        >
+            className={`${isActive ? "border-b-2 border-b-purple-500" : ""} ${className}`}>
             {children}
         </Link>
     );
