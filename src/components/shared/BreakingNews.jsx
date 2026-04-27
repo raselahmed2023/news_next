@@ -14,9 +14,9 @@ const news = [
 const BreakingNews = () => {
     return (
       
-        <div className='flex justify-between gap-4 items-center bg-gray-300 container mx-auto py-2 '>
+        <div className='rounded-md flex justify-between gap-4 items-center bg-gray-300 container mx-auto py-2 '>
             
-            <button className='btn bg-amber-900 text-white py-2  px-6'>
+            <button className='m-2 btn bg-amber-900 text-white py-2  px-6'>
                 Latest
             </button>
             
