@@ -29,7 +29,9 @@ export default async function CategoryNews({ params }) {
             <div className="col-span-6">
                 <h2 className="font-bold text-2xl">Dragon News Home</h2>
                 {news.map(n => (
-                    <div key={n._id}>{n.title}</div>
+                    <div key={n._id} className=" p-4 mb-5 mt-2 border rounded-md border-gray-400">
+                        <h2>{n.title}</h2>
+                    </div>
                 ))}
             </div>
             
