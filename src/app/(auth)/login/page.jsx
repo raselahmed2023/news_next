@@ -1,13 +1,31 @@
+"use client"
+
 import Link from "next/link";
-
-
-
+import { useState } from "react";
 
 
 const LoginPage = () => {
 
-    
-    
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState("false");
+
+    const onSubmit = (e) => {
+        setError("");
+
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+
+        if (!email) {
+            setError("Email is Required");
+            return;
+        }
+        if (password.length < 8) {
+            setError("password must be at least 8 Characters");
+            return;
+        }
+    }
+
 
     return (
         <div className="min-h-screen bg-base-200 flex items-center justify-center">
@@ -15,7 +33,11 @@ const LoginPage = () => {
                 <div className="card-body px-10 py-10">
                     <h2 className="text-center text-3xl font-bold mb-4">Sign In</h2>
 
-                    <form className="flex flex-col gap-4">
+                    {
+                        error && (<p className="text-error text-center mb-2 text-sm">{error}</p>)
+                    }
+
+                    <form onSubmit={onSubmit} className="flex flex-col gap-4">
                         <div className="form-control w-full">
                             <label className="label">
                                 <span className="label-text font-medium">Email <span className="text-error">*</span></span>
@@ -51,7 +73,7 @@ const LoginPage = () => {
                     <div className="divider">OR</div>
 
                     <button
-                       
+
                         type="button"
                         className="btn btn-outline w-full rounded-full"
                     >
@@ -66,9 +88,9 @@ const LoginPage = () => {
 
                     <div className="text-center mt-4">
                         <span className="text-sm">New user? </span>
-                       
-                         <Link href="/register" className="link link-primary text-sm">Register now</Link>
-                      
+
+                        <Link href="/register" className="link link-primary text-sm">Register now</Link>
+
                     </div>
                 </div>
             </div>
