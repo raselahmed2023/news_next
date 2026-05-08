@@ -15,7 +15,7 @@ const Navbar = () => {
             </ul>
             <div className='flex gap-2'>
                 <Image src={avater} alt='avater' width={40} height={40}></Image>
-                <button className='btn bg-black text-white'>Login</button>
+               <Link href={'/login'}> <button className='btn bg-black text-white'>Login</button></Link>
             </div>
         </div>
     );
