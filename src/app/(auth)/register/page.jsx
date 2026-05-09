@@ -25,7 +25,7 @@ const RegisterPage = () => {
             return;
         }
 
-        setLoading('true')
+        setLoading(true)
 
         setTimeout(() => {
             console.log({
