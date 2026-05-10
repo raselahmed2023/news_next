@@ -1,5 +1,6 @@
 "use client"
 
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -9,22 +10,41 @@ const LoginPage = () => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const onSubmit = (e) => {
-        setError("");
-
+    const onSubmit = async (e) => {
         e.preventDefault();
+
         const email = e.target.email.value;
         const password = e.target.password.value;
 
-        if (!email) {
-            setError("Email is Required");
+
+
+        if (!email || !password) {
+            setError("All fields are required");
             return;
         }
+
         if (password.length < 8) {
-            setError("password must be at least 8 Characters");
+            setError('Password must be at least 8 characters');
             return;
         }
-    }
+
+        setLoading(true)
+
+        const { data, error } = await authClient.signIn.email({
+            email,
+            password,
+            callbackURL:"/"
+        });
+        if (error) {
+            setError(error.message || "Registration failed");
+            setLoading(false);
+            return;
+        }
+
+
+        setLoading(false);
+        alert("Login successful");
+    };
 
 
     return (
@@ -65,8 +85,12 @@ const LoginPage = () => {
                             />
                         </div>
 
-                        <button type="submit" className="btn btn-primary rounded-full w-full mt-2">
-                            Sign In
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="btn btn-primary rounded-full w-full mt-2"
+                        >
+                            {loading ? "Signing in..." : "Sign In"}
                         </button>
                     </form>
 

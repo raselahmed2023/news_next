@@ -1,9 +1,11 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const RegisterPage = () => {
+    const router= useRouter();
 
     const [err, setErr] = useState('');
     const [loading, setLoading] = useState(false);
@@ -45,6 +47,7 @@ const RegisterPage = () => {
 
         setLoading(false);
         alert("Registration successful");
+        router.push("/login");
 
     };
 
