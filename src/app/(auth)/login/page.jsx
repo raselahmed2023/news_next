@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const LoginPage = () => {
 
-    const [error, setError] = useState("");
+    const [err, setErr] = useState("");
     const [loading, setLoading] = useState(false);
 
     const onSubmit = async (e) => {
@@ -19,12 +19,12 @@ const LoginPage = () => {
 
 
         if (!email || !password) {
-            setError("All fields are required");
+            setErr("All fields are required");
             return;
         }
 
         if (password.length < 8) {
-            setError('Password must be at least 8 characters');
+            setErr('Password must be at least 8 characters');
             return;
         }
 
@@ -33,10 +33,10 @@ const LoginPage = () => {
         const { data, error } = await authClient.signIn.email({
             email,
             password,
-            callbackURL:"/"
+            callbackURL: "/"
         });
         if (error) {
-            setError(error.message || "Registration failed");
+            setErr(error.message || "SignIn is failed");
             setLoading(false);
             return;
         }
@@ -46,6 +46,13 @@ const LoginPage = () => {
         alert("Login successful");
     };
 
+    const handleGoogleSignIn = async () => {
+        const data = await authClient.signIn.social({
+            provider: "google",
+            callbackURL: "/",
+        });
+    }
+
 
     return (
         <div className="min-h-screen bg-base-200 flex items-center justify-center">
@@ -54,7 +61,7 @@ const LoginPage = () => {
                     <h2 className="text-center text-3xl font-bold mb-4">Sign In</h2>
 
                     {
-                        error && (<p className="text-error text-center mb-2 text-sm">{error}</p>)
+                        err && (<p className="text-error text-center mb-2 text-sm">{err}</p>)
                     }
 
                     <form onSubmit={onSubmit} className="flex flex-col gap-4">
@@ -97,7 +104,7 @@ const LoginPage = () => {
                     <div className="divider">OR</div>
 
                     <button
-
+                        onClick={handleGoogleSignIn}
                         type="button"
                         className="btn btn-outline w-full rounded-full"
                     >
