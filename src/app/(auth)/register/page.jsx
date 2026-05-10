@@ -1,13 +1,14 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { useState } from "react";
 
 const RegisterPage = () => {
 
-    const [error, setError] = useState('');
+    const [err, setErr] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
         const name = e.target.name.value;
@@ -15,28 +16,35 @@ const RegisterPage = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
 
+
+
         if (!image || !name || !email || !password) {
-            setError("All fields are required");
+            setErr("All fields are required");
             return;
         }
 
         if (password.length < 8) {
-            setError('Password must be at least 8 characters');
+            setErr('Password must be at least 8 characters');
             return;
         }
 
         setLoading(true)
 
-        setTimeout(() => {
-            console.log({
-                name,
-                image,
-                password,
-                email
-            });
+        const { data, error } = await authClient.signUp.email({
+            email,
+            password,
+            name,
+            image
+        });
+        if (error) {
+            setErr(error.message || "Registration failed");
             setLoading(false);
-            alert("Registration is successful")
-        }, 1500);
+            return;
+        }
+
+
+        setLoading(false);
+        alert("Registration successful");
 
     };
 
@@ -48,7 +56,7 @@ const RegisterPage = () => {
                 <div className="card-body px-10 py-10">
                     <h2 className="text-center text-3xl font-bold mb-4">Sign Up</h2>
                     {
-                        error && (<p className="text-error text-center text-sm mb-2">{error}</p>)
+                        err && (<p className="text-error text-center text-sm mb-2">{err}</p>)
                     }
                     <form onSubmit={onSubmit} className="flex flex-col gap-4">
                         <div className="form-control w-full">

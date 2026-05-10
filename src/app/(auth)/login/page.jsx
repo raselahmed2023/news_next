@@ -7,7 +7,7 @@ import { useState } from "react";
 const LoginPage = () => {
 
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState("false");
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = (e) => {
         setError("");
